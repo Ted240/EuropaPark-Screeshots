@@ -10,8 +10,8 @@ Script expose a given port (see configuration), calling endpoint will return JSO
 Response will be formatted as follows:
 ```json
 {
-  "data": "<DATA/ERROR>", 
-  "time": "<TIME>"
+  "data": "[Object]<DATA/ERROR>", 
+  "time": "[float]<TIME>"
 }
 ```
 Access can be locked down if needed, you will need to give a token during fetch process to authenticate.
@@ -39,12 +39,12 @@ Token can be passed has an `Authentication` header or with an `token: <TOKEN>` s
 
 ```json
 {
-  "protected?": "<TRUE IF RETURN ADDITIONAL TOKEN TO VIEW (DEF: FALSE)>",
-  "source": "<IMAGE TO PROCESS ON>",
+  "protected?": "[bool]<TRUE IF RETURN ADDITIONAL TOKEN TO VIEW (DEF: FALSE)>",
+  "source": "[str]<IMAGE TO PROCESS ON>",
   "players": [
     {
-      "name": "<PLAYER NAME>",
-      "pos": "<POSITION INDEX>"
+      "name": "[str]<PLAYER NAME>",
+      "pos": "[int]<POSITION INDEX>"
     }
   ]
 }
@@ -56,6 +56,22 @@ Token can be passed has an `Authentication` header or with an `token: <TOKEN>` s
 |:----:|:------------------------------:|--------------------------------------------------|
 | 200  |          `{id: <ID>}`          | Return generated image id                        |
 | 200  |  `{id: <ID>, token: <TOKEN>}`  | Return generated image id in addition of a token |
-| 404  | `{error: "Player not found"}`  | Enable to find player skin                       |
-| 404  |  `{error: "Base not found"}`   | Enable to find the base image                    |
-| 404  | `{error: "Overlay not found"}` | Enable to find the overlay image                 |
+| 404  | `{error: "Player not found"}`  | Unable to find player skin                       |
+| 404  |  `{error: "Base not found"}`   | Unable to find the base image                    |
+| 404  | `{error: "Overlay not found"}` | Unable to find the overlay image                 |
+
+- ### View Image
+**Endpoint:** `/view?id=[int]<IMAGE ID>&token?=[str]<OPTIONAL TOKEN>`
+
+**Payload:**<br>
+
+```json
+{}
+```
+
+**Response:**
+
+| Code |              JSON              | Description                |
+|:----:|:------------------------------:|----------------------------|
+| 200  |              `{}`              | Return generated image id  |
+| 404  |  `{error: "Image not found"}`  | Unable to find image asked |
