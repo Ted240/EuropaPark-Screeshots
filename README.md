@@ -8,7 +8,7 @@ Rest api to generate custom screenshots bases on players positions and name
 ## API Documentation
 Script expose a given port (see configuration), calling endpoint will return JSON formatted data.
 Access can be locked down if needed, you will need to give a token during fetch process to authenticate.
-Token can be passed has an `Authentication` header or with a `token: <TOKEN>` statement in payload.
+Token can be passed has an `authorization` header or with a `authorization: <TOKEN>` statement in payload.
 
 ## Config file
 <details>
@@ -55,7 +55,8 @@ Token can be passed has an `Authentication` header or with a `token: <TOKEN>` st
 
 ## API Endpoints
 <details><summary> <b>API status</b> </summary>
-Give API state
+Give API state.
+Auth token is not required.
 
 **Endpoint:** `/status`
 
@@ -70,7 +71,7 @@ Give API state
 </details>
 
 <details><summary> <b>Generate image</b> </summary>
-Generate image of listed players
+Generate image of listed players in given situation.
 
 **Endpoint:** `/generate`
 
