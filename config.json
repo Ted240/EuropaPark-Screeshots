@@ -1,0 +1,20 @@
+{
+  "auth": {
+    "enable": true,
+    "token_file": "tokens.json",
+    "hashing": {
+      "enable": false,
+      "salt": 8
+    }
+  },
+  "files": {
+    "save": true,
+    "save_duration": 7,
+    "save_number": 10,
+    "save_weight": 100
+  },
+  "server": {
+    "port": 3000,
+    "fake_404": false
+  }
+}

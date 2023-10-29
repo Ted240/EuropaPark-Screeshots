@@ -2,16 +2,59 @@
 
 ---
 ## Description
-Rest api to generate custom screenshots bases on player position (indexed for now) and name
+Rest api to generate custom screenshots bases on players positions and name
 
 ---
 ## API Documentation
 Script expose a given port (see configuration), calling endpoint will return JSON formatted data.
 Access can be locked down if needed, you will need to give a token during fetch process to authenticate.
-Token can be passed has an `Authentication` header or with an `token: <TOKEN>` statement in payload.
+Token can be passed has an `Authentication` header or with a `token: <TOKEN>` statement in payload.
+
+## Config file
+<details>
+  <summary>File structure</summary>
+
+  ```
+{
+    auth: {
+        enable,
+        token_file
+        hashing: {
+            enable,
+            salt
+        }
+    },
+    files: {
+        save,
+        save_duration,
+        save_number,
+        save_weight
+    },
+    server: {
+        port,
+        fake_404
+    }
+}
+  ```
+|       Argument        |  Type   | Description                                                                                                                               |
+|:---------------------:|:-------:|-------------------------------------------------------------------------------------------------------------------------------------------|
+|     `auth.enable`     | boolean | `true` to activate authentication process                                                                                                 |
+|   `auth.token_file`   | string  | Path to file containing auth tokens                                                                                                       |
+| `auth.hashing.enable` | boolean | `true` to declare tokens as hashed, tokens must be stored as hashed                                                                       |
+|  `auth.hashing.salt`  | integer | Hashing salt level                                                                                                                        |
+|     `files.save`      | boolean | Specify if generated images are saved as files, else they are stored in memory. If script is restarted, images are permanently lost       |
+| `files.save_duration` | integer | Specify how long are saved images in days                                                                                                 |
+|  `files.save_number`  | integer | Specify how many images are stored at the same time                                                                                       |
+|  `files.save_weight`  | integer | Specify maximum total weight of images in MB                                                                                              |
+|     `server.port`     | integer | HTTP Server port                                                                                                                          |
+|   `server.fake_404`   | boolean | On protected images, if bad token is sent, return `404 - Image not found` error instead of `403 - Bad token`. Prevent token brute-forcing |
+
+
+
+</details>
 
 ## API Endpoints
-- ### API Status
+<details><summary> <b>API status</b> </summary>
 Give API state
 
 **Endpoint:** `/status`
@@ -24,8 +67,9 @@ Give API state
 | Code |       JSON       | Description                                 |
 |:----:|:----------------:|---------------------------------------------|
 | 200  | `{state: ready}` | API is ready to receive and generate images |
+</details>
 
-- ### Generate Image
+<details><summary> <b>Generate image</b> </summary>
 Generate image of listed players
 
 **Endpoint:** `/generate`
@@ -62,8 +106,9 @@ Generate image of listed players
 | 404  | `{error: "Player not found"}`  | Unable to find player skin           |
 | 404  |  `{error: "Base not found"}`   | Unable to find the base image        |
 | 404  | `{error: "Overlay not found"}` | Unable to find the overlay image     |
+</details>
 
-- ### View Image
+<details><summary> <b>View image</b> </summary>
 Return generated image.
 Auth token is not required.
 
@@ -91,6 +136,7 @@ GET Request: `/view?id=<ID>&token=<TOKEN>`
 | 200  |             `{}`             | Return generated image       |
 | 403  |  `{error: "Invalid token"}`  | Given image token is invalid |
 | 404  | `{error: "Image not found"}` | Unable to find image asked   |
+</details>
 
 ## Credits
 - Pseudo to UUID translate: [Mojang API](https://api.mojang.com)<br>`https://api.mojang.com/users/profiles/minecraft/{NAME}`
