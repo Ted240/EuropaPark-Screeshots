@@ -4,6 +4,7 @@ const express = require("express")
 const config = require("./config.json")
 
 const auth = require("./auth");
+const api = require("./api");
 
 const app = express();
 app.use(express.json())
@@ -18,7 +19,7 @@ app.use((req, res, next) => {
     try {
         /** Authentication **/
         if (!config.auth.enable) next(); // Auth disabled
-        else if (["/", "/stdddatus", "/view"].includes(req.path)) next(); // Asking for free access endpoint
+        else if (["/", "/status", "/view"].includes(req.path)) next(); // Asking for free access endpoint
         else {
 
             // Token grabbing
@@ -41,6 +42,16 @@ app.use((req, res, next) => {
     /** Default response **/
     if (!res.headersSent) res.status(200).json({state: "Automatically generated response, all went fine"});
 
+});
+
+Object.entries(api.endpoints).forEach(([name, data]) => {
+    try {
+        if (Object.keys(data.types).includes("get")) app.get(data.path, api.build_endpoint_func(data.types.get, data.func));
+        if (Object.keys(data.types).includes("post")) app.post(data.path, api.build_endpoint_func(data.types.post, data.func));
+        console.log(`[S] Endpoint '${name}' has been loaded`);
+    } catch (e) {
+        console.log(`[W] Endpoint '${name}' cannot be loaded\n${e}`);
+    }
 });
 
 app.listen(config.server.port, () => {
