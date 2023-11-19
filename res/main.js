@@ -39,8 +39,8 @@ app.use((req, res, next) => {
         /** Default error **/
         if (!res.headersSent) res.status(500).json({err: "An unexpected error occurred", details: e});
     }
-    /** Default response **/
-    if (!res.headersSent) res.status(200).json({state: "Automatically generated response, all went fine"});
+    /** Default timeout **/
+    setTimeout(() => {if (!res.headersSent) res.status(408).json({err: "Timed out", details: "Request was received but took too long to proceed."});}, 10000);
 
 });
 

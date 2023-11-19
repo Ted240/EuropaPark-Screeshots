@@ -36,18 +36,18 @@ Token can be passed has an `authorization` header or with a `authorization: <TOK
     }
 }
   ```
-|       Argument        |  Type   | Description                                                                                                                               |
-|:---------------------:|:-------:|-------------------------------------------------------------------------------------------------------------------------------------------|
-|     `auth.enable`     | boolean | `true` to activate authentication process                                                                                                 |
-|   `auth.token_file`   | string  | Path to file containing auth tokens                                                                                                       |
-| `auth.hashing.enable` | boolean | `true` to declare tokens as hashed, tokens must be stored as hashed                                                                       |
-|  `auth.hashing.salt`  | integer | Hashing salt level                                                                                                                        |
-|     `files.save`      | boolean | Specify if generated images are saved as files, else they are stored in memory. If script is restarted, images are permanently lost       |
-| `files.save_duration` | integer | Specify how long are saved images in days                                                                                                 |
-|  `files.save_number`  | integer | Specify how many images are stored at the same time                                                                                       |
-|  `files.save_weight`  | integer | Specify maximum total weight of images in MB                                                                                              |
-|     `server.port`     | integer | HTTP Server port                                                                                                                          |
-|   `server.fake_404`   | boolean | On protected images, if bad token is sent, return `404 - Image not found` error instead of `403 - Bad token`. Prevent token brute-forcing |
+| Added |       Argument        |  Type   | Description                                                                                                                               |
+|:-----:|:---------------------:|:-------:|-------------------------------------------------------------------------------------------------------------------------------------------|
+|   ✖   |     `auth.enable`     | boolean | `true` to activate authentication process                                                                                                 |
+|   ✖   |   `auth.token_file`   | string  | Path to file containing auth tokens                                                                                                       |
+|   ✖   | `auth.hashing.enable` | boolean | `true` to declare tokens as hashed, tokens must be stored as hashed                                                                       |
+|   ✖   |  `auth.hashing.salt`  | integer | Hashing salt level                                                                                                                        |
+|   ✖   |     `files.save`      | boolean | Specify if generated images are saved as files, else they are stored in memory. If script is restarted, images are permanently lost       |
+|   ✖   | `files.save_duration` | integer | Specify how long are saved images in days                                                                                                 |
+|   ✖   |  `files.save_number`  | integer | Specify how many images are stored at the same time                                                                                       |
+|   ✖   |  `files.save_weight`  | integer | Specify maximum total weight of images in MB                                                                                              |
+|   ✔   |     `server.port`     | integer | HTTP Server port                                                                                                                          |
+|   ✖   |   `server.fake_404`   | boolean | On protected images, if bad token is sent, return `404 - Image not found` error instead of `403 - Bad token`. Prevent token brute-forcing |
 
 
 
@@ -81,6 +81,7 @@ Generate image of listed players in given situation.
 {
     protected,
     camera,
+    async,
     players: [
         {
             name || uuid,
@@ -91,13 +92,14 @@ Generate image of listed players in given situation.
 ```
 **Args**
 
-|    Argument    | Req |  Type   | Description                                                                  |
-|:--------------:|:---:|:-------:|------------------------------------------------------------------------------|
-|  `protected`   |  ✖  | boolean | True if image token must be required to view (default: True)                 |
-|    `camera`    |  ✔  | string  | Camera identifier, used to determined what source image will be used as base |
-| `players.name` |  ✔  | string  | Player name, used to grab skin                                               |
-| `players.uuid` |  ✔  | string  | Player UUID, used to grab skin. Must be preferred over `players.name`        |
-| `players.pos`  |  ✔  | integer | Player position index                                                        |
+|    Argument    | Req |  Type   | Description                                                                                                                      |
+|:--------------:|:---:|:-------:|----------------------------------------------------------------------------------------------------------------------------------|
+|  `protected`   |  ✖  | boolean | True if image token must be required to view (default: `True`)                                                                   |
+|    `camera`    |  ✔  | string  | Camera identifier, used to determined what source image will be used as base                                                     |
+|    `async`     |  ✖  | boolean | Immediately return `id` and `token` fields without completing task. Request timeouts can occurred if disabled (default: `False`) |
+| `players.name` |  ✔  | string  | Player name, used to grab skin                                                                                                   |
+| `players.uuid` |  ✔  | string  | Player UUID, used to grab skin. Must be preferred over `players.name`                                                            |
+| `players.pos`  |  ✔  | integer | Player position index                                                                                                            |
 
 **Response:**
 
