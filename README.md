@@ -141,6 +141,11 @@ GET Request: `/view?id=<ID>&token=<TOKEN>`
 | 404  | `{error: "Image not found"}` | Unable to find image asked   |
 </details>
 
-## Credits
-- Pseudo to UUID translate: [Mojang API](https://api.mojang.com)<br>`https://api.mojang.com/users/profiles/minecraft/{NAME}`
-- UUID to skin texture: [Crafatar.com](https://crafatar.com/)<br>`https://crafatar.com/skins/{UUID}`
+## Services used
+- Pseudo to UUID translate: **[Mojang API](https://api.mojang.com)**<br>
+`https://api.mojang.com/users/profiles/minecraft/{NAME}`
+
+
+- UUID to skin texture: **Mojang Session**<br>
+`https://sessionserver.mojang.com/session/minecraft/profile/{UUID}`
+
