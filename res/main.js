@@ -5,6 +5,7 @@ const config = require("./config.json")
 
 const auth = require("./auth");
 const api = require("./api");
+api.config = config;
 
 const app = express();
 app.use(express.json())

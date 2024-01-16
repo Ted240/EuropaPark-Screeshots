@@ -1,9 +1,35 @@
 const jimp = require("jimp");
 
-const getPixel = (_this, x, y) => {return Object.values(jimp.intToRGBA(_this.getPixelColor(x, y)));}
-const putPixel = (_this, x, y, r, g, b, a) => {_this.setPixelColor(jimp.rgbaToInt(r, g, b, a), x, y);}
+/**
+ * @param _this {jimp} Image to proceed
+ * @param x {Number} X coords
+ * @param y {Number} Y coords
+ * @return {[Number, Number, Number, Number]} R G B A values
+ */
+const getPixel = (_this, x, y) => {
+    return Object.values(jimp.intToRGBA(_this.getPixelColor(x, y)));
+};
 
-exports.generate = (cam_id, players) => {
+/**
+ * @param _this {jimp} Image to proceed
+ * @param x {Number} X coords
+ * @param y {Number} Y coords
+ * @param r {Number} Red value
+ * @param g {Number} Green value
+ * @param b {Number} Blue value
+ * @param a {Number} Alpha value
+ */
+const putPixel = (_this, x, y, r, g, b, a) => {
+    _this.setPixelColor(jimp.rgbaToInt(r, g, b, a), x, y);
+};
+
+/**
+ * @param cam_id {Number}
+ * @param players {{Number: String}} {<pos>: <uuid>, ...}
+ * @param output_name {String} Output file's name
+ * @return {Promise<Boolean>} Operation finished
+ */
+module.exports.generate = (cam_id, players, output_name) => {
     return new Promise(async (resolve, _reject) => {
         let base = await jimp.read(`bases\\${cam_id}.png`);
         let render = await jimp.read(`bases\\${cam_id}.png`);
@@ -39,11 +65,13 @@ exports.generate = (cam_id, players) => {
                 }
             }
         }
-        render.write("render.png", () => {
-            console.log("Saved");
-            resolve("render.png");
+        render.write(`${__dirname}\\generated\\${output_name}.png`, () => {
+            resolve(true);
         });
     })
 }
-let a = exports.generate(0, {1: "skin_0"});
-a.then(console.log)
+
+module.exports = {...module.exports, putPixel, getPixel};
+
+// let a = module.exports.generate(0, {1: "069a79f444e94726a5befca90e38aaf5"});
+// a.then(console.log)

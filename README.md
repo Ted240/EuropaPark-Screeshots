@@ -96,7 +96,6 @@ Generate image of listed players in given situation.
 |:--------------:|:---:|:-------:|----------------------------------------------------------------------------------------------------------------------------------|
 |  `protected`   |  ✖  | boolean | True if image token must be required to view (default: `True`)                                                                   |
 |    `camera`    |  ✔  | string  | Camera identifier, used to determined what source image will be used as base                                                     |
-|    `async`     |  ✖  | boolean | Immediately return `id` and `token` fields without completing task. Request timeouts can occurred if disabled (default: `False`) |
 | `players.name` |  ✔  | string  | Player name, used to grab skin                                                                                                   |
 | `players.uuid` |  ✔  | string  | Player UUID, used to grab skin. Must be preferred over `players.name`                                                            |
 | `players.pos`  |  ✔  | integer | Player position index                                                                                                            |
